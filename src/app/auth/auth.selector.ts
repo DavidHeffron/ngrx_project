@@ -20,4 +20,5 @@ export const isLoggedOut = createSelector(
     isLoggedIn,
     //result of applying isLoggedIn to the stores state
     loggedIn => !loggedIn
+    //take loggedIn from isLoggedIn and give us the ! (oppisite) of it to get isLoggedOut
 )

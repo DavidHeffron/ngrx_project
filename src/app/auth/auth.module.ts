@@ -11,6 +11,8 @@ import {AuthService} from "./auth.service";
 import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from './reducers';
 import { authReducer } from './reducers';
+import { AuthGuard } from './auth.guard';
+import { AuthEffects } from './auth.effects';
 
 @NgModule({
     imports: [
@@ -21,11 +23,9 @@ import { authReducer } from './reducers';
         MatButtonModule,
         RouterModule.forChild([{path: '', component: LoginComponent}]),
         //StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers, { metaReducers: fromAuth.metaReducers }),
-        StoreModule.forFeature(
-            'auth',
-            authReducer
-        ),
-
+        StoreModule.forFeature('auth',authReducer),
+        //the array should contain a list of the side effects that we create
+        EffectsModule.forFeature([AuthEffects])
     ],
     declarations: [LoginComponent],
     exports: [LoginComponent]
@@ -35,7 +35,8 @@ export class AuthModule {
         return {
             ngModule: AuthModule,
             providers: [
-              AuthService
+              AuthService,
+              AuthGuard
             ]
         }
     }

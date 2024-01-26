@@ -5,7 +5,7 @@ import {map} from 'rxjs/operators';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 import { AppState } from './reducers';
 import { isLoggedIn, isLoggedOut } from './auth/auth.selector';
-import { logoutAction } from './auth/auth.actions';
+import { loginAction, logoutAction } from './auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,14 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+
+      //this is so that on each refresh, if local storage contains a user profile, we will dispatch
+      //an action to get the user profile back into the store and stay logged in since
+      //the stores data will not last through a refresh
+      const userProfile = localStorage.getItem('user');
+      if(userProfile){
+        this.store.dispatch(loginAction({user: JSON.parse(userProfile)}))
+      }
 
       this.router.events.subscribe(event  => {
         switch (true) {
