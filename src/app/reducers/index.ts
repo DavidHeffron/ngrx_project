@@ -16,6 +16,7 @@ import {
       router: routerReducer
   };
   
+  //metaReducer logs the action and state before login reducer is invoked
   export function logger(reducer:ActionReducer<any>)
       : ActionReducer<any> {
       return (state, action) => {

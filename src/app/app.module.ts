@@ -1,3 +1,4 @@
+import { metaReducers } from './reducers/index';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule, isDevMode} from '@angular/core';
 
@@ -56,7 +57,20 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, {
+      //metaReducer is processed before normal reducers are
+      metaReducers,
+      runtimeChecks: {
+        //ensures that state never gets mutated
+        strictStateImmutability: true,
+        //ensures that we do not mutate actions
+        strictActionImmutability: true,
+        //ensure actions can be saved by devtools to be replayed later on
+        strictActionSerializability: true,
+        //ensures that state inside the store can be serialized somewhere such as local storage
+        strictStateSerializability: true,
+      }
+    }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([]),
     //Add below to time travel debugger, stores router state (url, paramas, data etc.)

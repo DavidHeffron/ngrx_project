@@ -29,7 +29,8 @@ export const initialAuthState: AuthState = {
 export const authReducer = createReducer(
   //have to send inital state
   initialAuthState,
-  //use ngrx store on method tell store that on authactions.login take a state and action, then modify by returning a new state with the actions update info
+  //use ngrx store on method tell store that on authactions.login take a state and action,
+  // then modify by returning a new state with the actions update info
   on(AuthActions.loginAction, (state, action) => {
     return {
       user:action.user
